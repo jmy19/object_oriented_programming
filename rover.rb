@@ -13,6 +13,7 @@ class Rover
 		end
 		
 	end
+
 	def turn(turn_dir)
 		case
 			when @direction == "N"
@@ -31,6 +32,7 @@ class Rover
 				if turn_dir == "L" then @direction = "S"
 				elsif turn_dir == "R" then @direction = "N"
 				end
+
 		end
 	end
 
@@ -49,22 +51,30 @@ class Rover
 
 end
 
-print "what is the plateau size?"
+def verification(instructions)
+		instructions.each_char.all? { |x| x == "L" || x == "R" || x == "M"}
+	end 
+
+print "what are the dimensions of the plateau (input as: X Y)"
 plateau = gets.chomp!
 
 print "Enter the starting position and direction of the first rover (with a space between each)"
 startpos1 = gets.chomp
 rover1 = Rover.new(startpos1[0].to_i, startpos1[2].to_i, startpos1[4].upcase)
 print "Enter the instructions for the first rover (no spaces)"
-instructions1 = (gets.chomp.upcase)
+while instructions1 = (gets.chomp).upcase
+	if verification(instructions1)
+		break
+	else puts "invalid command"
+	end
+end
 rover1.read_instructions(instructions1)
 
 print "Enter the starting position and direction of the second rover (with a space between each)"
 startpos2 = gets.chomp
 rover2 = Rover.new(startpos2[0].to_i, startpos2[2].to_i, startpos2[4].upcase)
 print "Enter the instructions for the second rover (no spaces)"
-instructions2 = (gets.chomp.upcase)
-rover2.read_instructions(instructions2)
+rover2.read_instructions(gets.chomp.upcase)
 
 puts rover1
 puts rover2
