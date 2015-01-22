@@ -4,12 +4,11 @@ class Rover
 		@y = y
 		@direction = direction
 	end
-	
+
 	def read_instructions(instructions)
-		instructions.each_char do |single_instruction|
+		instructions.each_char do |instruction|
 			if instruction == "M" then move
-			elsif instruction == "R" || instruction == "R" then turn(instruction)
-			else puts "invalid instructions"
+			elsif instruction == "L" || instruction == "R" then turn(instruction)
 			end
 		end
 		
@@ -20,15 +19,15 @@ class Rover
 				if turn_dir == "L" then @direction = "W"
 				elsif turn_dir == "R" then @direction = "E"
 				end
-			when direction == "E"
+			when @direction == "E"
 				if turn_dir == "L" then @direction = "N"
 				elsif turn_dir == "R" then @direction = "S"
 				end
-			when direction == "S"
+			when @direction == "S"
 				if turn_dir == "L" then @direction = "E"
 				elsif turn_dir == "R" then @direction = "W"
 				end
-			when direction == "W"
+			when @direction == "W"
 				if turn_dir == "L" then @direction = "S"
 				elsif turn_dir == "R" then @direction = "N"
 				end
@@ -36,12 +35,16 @@ class Rover
 	end
 
 	def move
-		case(@direction)
+		case
 			when @direction == "N" then @y +=1
 			when @direction == "S" then @y -=1
-			when @direction == "E" then @x -=1
-			when @direction == "W" then @x +=1
+			when @direction == "E" then @x +=1
+			when @direction == "W" then @x -=1
 		end
+	end
+
+	def to_s
+		"#{@x} #{@y} #{@direction}"
 	end
 
 end
@@ -50,6 +53,18 @@ print "what is the plateau size?"
 plateau = gets.chomp!
 
 print "Enter the starting position and direction of the first rover (with a space between each)"
-startpos = gets.chomp
-rover1 = Rover.new(startpos[0].to_i, startpos[2].to_i, startpos[4].upcase)
+startpos1 = gets.chomp
+rover1 = Rover.new(startpos1[0].to_i, startpos1[2].to_i, startpos1[4].upcase)
+print "Enter the instructions for the first rover (no spaces)"
+instructions1 = (gets.chomp.upcase)
+rover1.read_instructions(instructions1)
 
+print "Enter the starting position and direction of the second rover (with a space between each)"
+startpos2 = gets.chomp
+rover2 = Rover.new(startpos2[0].to_i, startpos2[2].to_i, startpos2[4].upcase)
+print "Enter the instructions for the second rover (no spaces)"
+instructions2 = (gets.chomp.upcase)
+rover2.read_instructions(instructions2)
+
+puts rover1
+puts rover2
