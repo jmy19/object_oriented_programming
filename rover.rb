@@ -74,7 +74,13 @@ print "Enter the starting position and direction of the second rover (with a spa
 startpos2 = gets.chomp
 rover2 = Rover.new(startpos2[0].to_i, startpos2[2].to_i, startpos2[4].upcase)
 print "Enter the instructions for the second rover (no spaces)"
-rover2.read_instructions(gets.chomp.upcase)
+while instructions2 = (gets.chomp).upcase
+	if verification(instructions2)
+		break
+	else puts "invalid command"
+	end
+end
+rover2.read_instructions(instructions2)
 
 puts rover1
 puts rover2
